@@ -1,0 +1,58 @@
+<div fxLayout="column" fxLayoutAlign="space-around center">
+    <div class="header" fxLayout="row" fxLayoutAlign="center center">
+        <a routerLink="/">
+            <img style="height: 4rem; width: 4rem;" src="../../../assets/whisky_glass.svg" alt="whiskey glass image" />
+        </a>
+        <span>Welcome to the cocktail club.</span>
+    </div>
+
+    <div class="body" fxLayout="column" fxLayoutAlign="center center">
+        <div class="filter-section" fxLayout="row" fxLayoutAlign="space-between end">
+            <mat-form-field appearance="fill">
+                <mat-label>Filter drink</mat-label>
+                <mat-select [(value)]="filterBy">
+                    <mat-option>None</mat-option>
+                    <mat-option value="category">Category</mat-option>
+                    <mat-option value="name">Name</mat-option>
+                    <mat-option value="ingredient">Ingredient</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="search-field">
+                <mat-label>type to search</mat-label>
+                <input matInput type="text" (ngModelChange)="getDrinks()" [(ngModel)]="inputText">
+                <button mat-button *ngIf="inputText" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="inputText=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div class="cocktails">
+            <cdk-virtual-scroll-viewport [itemSize]="750" class="cocktail-viewport">
+                <mat-card *cdkVirtualFor="let cocktail of cocktailData;" class="card">
+                    <mat-card-header>
+                        <div mat-card-avatar class="header-image"></div>
+                        <mat-card-title> {{cocktail.strDrink }}</mat-card-title>
+                        <mat-card-subtitle> {{cocktail.strCategory }} </mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image class="drink-image" src="{{cocktail.strDrinkThumb}}"
+                        alt="Photo of a {{ cocktail.strDrink }}">
+                    <mat-card-content>
+                        <p>
+                            <strong>Instructions:</strong> {{ cocktail.strInstructions }}
+                        </p>
+                        <p>
+                            <strong>Ingredient: </strong> {{ cocktail.strIngredient1 }}, {{ cocktail.strIngredient2 }},
+                            {{ cocktail.strIngredient3 }},{{ cocktail.strIngredient4 }}
+                        </p>
+                    </mat-card-content>
+                    <mat-card-footer>
+                        <span><em> Glass: </em> {{ cocktail.strGlass }} </span>
+                    </mat-card-footer>
+                </mat-card>
+            </cdk-virtual-scroll-viewport>
+        </div>
+
+    </div>
+</div>
